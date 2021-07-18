@@ -36,7 +36,6 @@ class AboutNone(Koan):
         # Need a recap on how to evaluate __class__ attributes?
         #
         #     https://github.com/gregmalcolm/python_koans/wiki/Class-Attribute
-
         self.assertEqual(AttributeError, ex2. __class__)
 
         # What message was attached to the exception?
