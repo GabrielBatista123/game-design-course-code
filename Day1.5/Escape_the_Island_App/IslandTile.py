@@ -1,4 +1,4 @@
-from IPython.display import clear_output
+
 import numpy as np
 
 class IslandTile:

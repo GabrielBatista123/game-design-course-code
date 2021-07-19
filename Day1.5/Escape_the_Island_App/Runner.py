@@ -27,10 +27,11 @@ class Runner:
                 return False
             else:
                 print('Invalid input')
+            
         
     def save_max_number_of_days(self, days_survived):
         if days_survived > self.maximum_number_of_days_survided:
             self.maximum_number_of_days_survided = days_survived
-        print('you have survived a maximum number of'+str(self.maximum_number_of_days_survided)+'days')
+        print('you have survived a maximum number of '+str(self.maximum_number_of_days_survided)+' days')
         
 
