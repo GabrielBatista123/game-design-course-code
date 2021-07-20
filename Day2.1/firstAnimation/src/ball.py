@@ -98,9 +98,9 @@ while True:
         elif (location2[0] < 0):
             speed_x2 = 12
         elif (location2[1] < 0):
-            speed_y2 = 6
+            speed_y2 = 5
         elif (location2[1] > 540) :
-            speed_y2 = - 6
+            speed_y2 = - 5
 
 
     Ball1.x = location[0]
