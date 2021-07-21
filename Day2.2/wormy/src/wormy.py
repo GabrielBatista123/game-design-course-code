@@ -5,11 +5,12 @@ from pygame import time
 from pygame.event import get, post
 from pygame.locals import*
 from pygame.time import delay
+from pygame.transform import scale
 
 
-WINDOWWIDTH = 640
-WINDOWHEIGHT = 480
-CELLSIZE = 20
+WINDOWWIDTH = 800#640
+WINDOWHEIGHT = 640#480
+CELLSIZE = 40
 
 assert WINDOWWIDTH % CELLSIZE == 0, "window width must be a multiple of cell size"
 assert WINDOWHEIGHT % CELLSIZE == 0, "Window height must be a multiple of cell size"
@@ -17,12 +18,21 @@ assert WINDOWHEIGHT % CELLSIZE == 0, "Window height must be a multiple of cell s
 CELLWIDTH = int(WINDOWWIDTH/ CELLSIZE)
 CELLHEIGHT = int(WINDOWHEIGHT/ CELLSIZE)
 
-image = pygame.image.load('./Arts/maça.png')
+red_apple = pygame.image.load('./Arts/maça.png')
+orange_apple = pygame.image.load('./Arts/orange_apple.png')
+green_apple = pygame.image.load('./Arts/green_apple.png')
+
+white_apple = pygame.image.load('./Arts/white_apple.png')
+new_white_apple = pygame.transform.scale(white_apple, (CELLSIZE, CELLSIZE))
+new_green_apple = pygame.transform.scale(green_apple, (CELLSIZE,CELLSIZE))
+
+new_orange_apple = pygame.transform.scale(orange_apple, (CELLSIZE,CELLSIZE))
+#new_orange_apple.set_colorkey((255,255,255))
+
 
 #new_image_rect = image.get_rect()
-
-new_image = pygame.transform.scale(image, (20, 20))
-new_image.set_colorkey((255,255,255))
+new_red_apple = pygame.transform.scale(red_apple, (CELLSIZE, CELLSIZE))
+#new_red_apple.set_colorkey((0,0,0))
 
 #new_image_rect = new_image.get_rect()
 
@@ -116,7 +126,7 @@ def runGame():
             poison_apple= getRandomLocation()
             del wormCoords[-1] 
             del wormCoords[-1] 
-            if len(wormCoords) < 4:
+            if len(wormCoords) < 3:
                 return
 
         else:
@@ -175,19 +185,21 @@ def drawAplle(apple):
     y = apple['y'] * CELLSIZE 
     appleSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
     pygame.draw.rect(DISPLAYSURF, RED, appleSegmentRect)
-    DISPLAYSURF.blit(new_image, (x, y))
+    DISPLAYSURF.blit(new_red_apple, (x, y))
 
 def draw_Apple_Green(apple_green):
     x_green = apple_green['x'] * CELLSIZE
     y_green = apple_green['y'] * CELLSIZE
     appleSegmentRectGreen = pygame.Rect(x_green, y_green, CELLSIZE, CELLSIZE)
     pygame.draw.rect(DISPLAYSURF, GREEN, appleSegmentRectGreen)
+    DISPLAYSURF.blit(new_green_apple, (x_green, y_green))
 
 def draw_apple_orange(apple_orange):
     x_orange = apple_orange['x'] * CELLSIZE
     y_orange = apple_orange['y'] * CELLSIZE
     appleSegmentRectOrange = pygame.Rect(x_orange, y_orange, CELLSIZE, CELLSIZE)
     pygame.draw.rect(DISPLAYSURF, (255, 127, 0), appleSegmentRectOrange)
+    DISPLAYSURF.blit(new_orange_apple, (x_orange, y_orange))
 
 
 def draw_poison_apple(poison_apple):                   # preciso ver isso ainda 
@@ -195,6 +207,7 @@ def draw_poison_apple(poison_apple):                   # preciso ver isso ainda
     y_posion = poison_apple['y'] * CELLSIZE
     poisonAppleSegmentRect = pygame.Rect(x_posion, y_posion, CELLSIZE, CELLSIZE)
     pygame.draw.rect(DISPLAYSURF, (255,255,255), poisonAppleSegmentRect)
+    DISPLAYSURF.blit(new_white_apple, (x_posion, y_posion))
 
 def drawScore(score):
 
@@ -267,26 +280,28 @@ def showStartScreen():
     start_ask = start_screen.render('Ready to start the game?', True, WHITE)
     start_ask_red_apple = start_screen_sumary.render('Red apple: Just to increase your wormy', True, RED)#.Apple green: It will increase both your wormy and velocity\nApple orange: It will increase your wormy but will decrease your velocity for normal one',True, RED)
     start_ask_green_apple = start_screen_sumary.render('Green apple: It will increase both your wormy and velocity', True, GREEN)
+    start_ask_white_apple = start_screen_sumary.render('White apple: It will poison your wormy and decrease it', True, WHITE)
+    start_ask_orange_apple = start_screen_sumary.render('Orange: It will increase your wormy and decrease velocity', True, (255, 165, 0))
 
     start_rect = start_ask.get_rect()
     start_ask_red_apple_rect = start_ask_red_apple.get_rect()
     start_ask_red_apple_rect.midtop = (WINDOWWIDTH/2, WINDOWHEIGHT/2 + 60)
     start_ask_green_apple_rect = start_ask_green_apple.get_rect()
     start_ask_green_apple_rect.midtop = (WINDOWWIDTH/2, WINDOWHEIGHT/2 + 80)
+    start_ask_white_apple_rect = start_ask_white_apple.get_rect()
+    start_ask_white_apple_rect.midtop = (WINDOWWIDTH/2, WINDOWHEIGHT/2 + 100)
+    start_ask_orange_apple_rect = start_ask_orange_apple.get_rect()
+    start_ask_orange_apple_rect.midtop = (WINDOWWIDTH/2, WINDOWHEIGHT/2 + 120)
     start_rect.midtop = (WINDOWWIDTH/2, WINDOWHEIGHT/2)
 
     DISPLAYSURF.blit(start_ask, start_rect)
     DISPLAYSURF.blit(start_ask_red_apple, start_ask_red_apple_rect)
     DISPLAYSURF.blit(start_ask_green_apple, start_ask_green_apple_rect)
+    DISPLAYSURF.blit(start_ask_white_apple, start_ask_white_apple_rect)
+    DISPLAYSURF.blit(start_ask_orange_apple, start_ask_orange_apple_rect)
+
     pygame.display.update()
-    pygame.time.wait(5000)    
-
-    """ time_screen = start_screen.render('Time : '+str(),True, WHITE)
-        time_screen_rect = time_screen.get_rect()
-        time_screen_rect.midtop = (WINDOWWIDTH/2, WINDOWHEIGHT/4)
-
-        DISPLAYSURF.blit(time_screen, time_screen_rect)"""
-
+    pygame.time.wait(5000)
 
 if __name__ == '__main__':
     main()
